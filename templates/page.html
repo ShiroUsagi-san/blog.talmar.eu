@@ -1,0 +1,11 @@
+{% extends "index.html" %}
+
+{% block content %}
+    <article class="article">
+        <h1 class="article-header"> cat <span id="typewriter">{{ page.title }}.md</span> </h1>
+        {% if page.date %}
+            <p class="article-meta">{{ page.date | date(format="%d-%m-%Y") }}</p>
+        {% endif %}
+        {{ page.content | safe }}
+    </article>
+{% endblock content %}

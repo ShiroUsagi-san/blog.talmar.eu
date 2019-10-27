@@ -1,0 +1,19 @@
+.article-header h1{
+    overflow: hidden;
+}
+#typewriter {
+    border-right: .10em solid $text-color;
+    white-space: nowrap;
+    letter-spacing: .05em;
+    animation:
+        blink-caret 1s step-end infinite;
+}
+
+a:hover {
+    text-decoration: underline;
+    background-color: $hover-color;
+}
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: $text-color; }
+  }

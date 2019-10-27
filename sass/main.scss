@@ -1,0 +1,10 @@
+$base-font-family: 'Inconsolata', serif;
+$title-font-family: 'Noto Sans', serif;
+
+$background-color:#232329 ;
+$text-color: #D8D8D8;
+$hover-color: #A1B56C;
+@import url("https://fonts.googleapis.com/css?family=Inconsolata|Noto+Sans|Noto+Serif|Roboto+Mono");
+
+@import "base";
+@import "effects";

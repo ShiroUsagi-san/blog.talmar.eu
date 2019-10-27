@@ -1,0 +1,20 @@
+@charset "utf-8";
+
+html {
+    color: $text-color;
+}
+body {
+    background-color: $background-color;
+    
+    margin: 5em;
+    font-family: $base-font-family;
+    font-size: 110%;
+
+}
+.article-meta {
+    color: #585858;
+}
+a {
+    text-decoration: none;
+    color: $text-color;
+}
