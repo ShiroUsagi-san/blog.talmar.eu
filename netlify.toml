@@ -1,6 +1,5 @@
 [build]
-base = "blog"
-publish =  "blog/public"
+publish =  "public/"
 command = "zola build"
 
 
