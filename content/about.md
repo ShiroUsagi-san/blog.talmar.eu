@@ -2,4 +2,5 @@
 title = "Whoami"
 template = "about.html"
 +++
-please wait, description loading...
+
+Merci de patienter, la page se charge.

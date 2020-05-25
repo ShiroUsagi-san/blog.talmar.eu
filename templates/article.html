@@ -1,11 +1,21 @@
 {% extends "index.html" %}
-
+{% block page_title %}
+<h1 class="article-header">cat <span id="typewriter">{{ page.title }}.md</span> </h1>
+{% endblock %}
 {% block content %}
     <article class="article">
-        <h1 class="article-header">cat <span id="typewriter">{{ page.title }}.md</span> </h1>
-        {% if page.date %}
-            <p class="article-meta">{{ page.date | date(format="%d-%m-%Y") }}</p>
+        <div class="article-header">
+        {% if page.taxonomies.tags %}
+            {% for tag in page.taxonomies.tags %}
+                <a href='{{ get_taxonomy_url(kind="tags", name=tag) | safe }}'>[{{ tag }}]</a>    
+            {% endfor %}
         {% endif %}
-        {{ page.content | safe }}
+        {% if page.date %}
+            <p>{{ page.date | date(format="%d-%m-%Y") }}</p>
+        {% endif %}
+        </div>
+			<div class="content">
+               {{ page.content | safe }}
+			</div>
     </article>
 {% endblock content %}

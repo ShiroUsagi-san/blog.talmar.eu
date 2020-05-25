@@ -1,5 +1,10 @@
 +++
-title = "Hello-word"
-date = 2019-10-27
+title = "hello word"
+date = 2020-05-25
+
+[taxonomies]
+tags = ["hello", "test"]
 +++
-This is the first article ever written on this blog, and I hope not the last one
+
+Salut à tous, ceci est mon premier sur ce blog flambant neuf, il est d'ailleurs encore en construction. Je posterais des articles sur mes aventures.
+Je vais essayer de poster du contenu régulièrement car j'ai beaucoup de choses à comprendre et à découvrir :)

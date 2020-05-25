@@ -8,10 +8,13 @@
     animation:
         blink-caret 1s step-end infinite;
 }
-
+ul {
+    list-style-type: square;
+}
 a:hover {
-    text-decoration: underline;
-    background-color: $hover-color;
+    //text-decoration: underline;
+    //background-color: $hover-color;
+	border-bottom: 3px dotted;
 }
 @keyframes blink-caret {
     from, to { border-color: transparent }
