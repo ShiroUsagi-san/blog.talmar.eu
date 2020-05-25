@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+    <channel>
+        <title>Mahal&#x27;s blog</title>
+        <link>http://127.0.0.1:1111</link>
+        <description></description>
+        <generator>Zola</generator>
+        <language>fr</language>
+        <atom:link href="http://127.0.0.1:1111/tags/test/rss.xml" rel="self" type="application/rss+xml"/>
+        <lastBuildDate>Mon, 25 May 2020 00:00:00 +0000</lastBuildDate>
+        
+        
+            <item>
+                <title>hello word - Mahal&#x27;s blog</title>
+                <pubDate>Mon, 25 May 2020 00:00:00 +0000</pubDate>
+                <link>http://127.0.0.1:1111/articles/hello-word/</link>
+                <guid>http://127.0.0.1:1111/articles/hello-word/</guid>
+                <description><p>Salut à tous, ceci est mon premier sur ce blog flambant neuf, il est d'ailleurs encore en construction. Je posterais des articles sur mes aventures.
+Je vais essayer de poster du contenu régulièrement car j'ai beaucoup de choses à comprendre et à découvrir :)</p>
+</description>
+                <content:encoded><p>Salut à tous, ceci est mon premier sur ce blog flambant neuf, il est d'ailleurs encore en construction. Je posterais des articles sur mes aventures.
+Je vais essayer de poster du contenu régulièrement car j'ai beaucoup de choses à comprendre et à découvrir :)</p>
+</content:encoded>
+            </item>
+        
+    </channel>
+</rss>

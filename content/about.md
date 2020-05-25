@@ -3,4 +3,4 @@ title = "Whoami"
 template = "about.html"
 +++
 
-Merci de patienter, la page se charge.
+Merci de patienter, la page se remplie.

@@ -28,9 +28,9 @@
             {% for article in articles.pages %}
                 <li><a href='{{ article.permalink }}'>{{ article.title }}  <span class="article-meta">{{ article.date | date(format="%d-%m-%Y") }}</span></a>
                 {% if article.taxonomies %}
-                {% for tag in article.taxonomies.tags %}
-                    <a class="article-meta"href='{{ get_taxonomy_url(kind="tags", name=tag) | safe }}'>[{{ tag }}]</a>
-                    {% endfor %}
+                    [{% for tag in article.taxonomies.tags %}
+                        <a class="article-meta"href='{{ get_taxonomy_url(kind="tags", name=tag) | safe }}'>{{ tag }}</a>{% if loop.index == article.taxonomies.tags | length - 1 %},{%endif%}
+                    {% endfor %}]
                 {% endif %}
                 <div class="article-summary">
                     <p>{{ article.summary  | safe }} ...</p>

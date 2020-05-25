@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    
+        <url>
+            <loc>http://127.0.0.1:1111/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>http://127.0.0.1:1111/about/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>http://127.0.0.1:1111/articles/hello-word/</loc>
+            
+                <lastmod>2020-05-25</lastmod>
+            
+        </url>
+    
+        <url>
+            <loc>http://127.0.0.1:1111/en/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>http://127.0.0.1:1111/en/about/</loc>
+            
+                <lastmod>2020-05-22</lastmod>
+            
+        </url>
+    
+        <url>
+            <loc>http://127.0.0.1:1111/en/projects/</loc>
+            
+                <lastmod>2020-05-22</lastmod>
+            
+        </url>
+    
+        <url>
+            <loc>http://127.0.0.1:1111/fr/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>http://127.0.0.1:1111/main/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>http://127.0.0.1:1111/projects/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>http://127.0.0.1:1111/tags/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>http://127.0.0.1:1111/tags/hello/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>http://127.0.0.1:1111/tags/test/</loc>
+            
+        </url>
+    
+</urlset>

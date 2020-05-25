@@ -6,9 +6,9 @@
     <article class="article">
         <div class="article-header">
         {% if page.taxonomies.tags %}
-            {% for tag in page.taxonomies.tags %}
-                <a href='{{ get_taxonomy_url(kind="tags", name=tag) | safe }}'>[{{ tag }}]</a>    
-            {% endfor %}
+            [{% for tag in page.taxonomies.tags %}
+                <a href='{{ get_taxonomy_url(kind="tags", name=tag) | safe }}'>{{ tag }}</a>{% if loop.index == page.taxonomies.tags | length - 1 %},{%endif%}
+            {% endfor %}]
         {% endif %}
         {% if page.date %}
             <p>{{ page.date | date(format="%d-%m-%Y") }}</p>
