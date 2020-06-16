@@ -26,7 +26,7 @@
         <ul class="articles">
             {% set articles = get_section(path="articles/_index.md") %}
             {% for article in articles.pages %}
-                <li><a href='{{ article.permalink }}'>{{ article.title }}  <span class="article-meta">{{ article.date | date(format="%d-%m-%Y") }}</span></a>
+                <li><span class="article-meta">{{ article.date | date(format="%d-%m-%Y") }}</span> - <a href='{{ article.permalink }}'>{{ article.title }}</a>
                 {% if article.taxonomies %}
                     [{% for tag in article.taxonomies.tags %}
                         <a class="article-meta"href='{{ get_taxonomy_url(kind="tags", name=tag) | safe }}'>{{ tag }}</a>{% if loop.index == article.taxonomies.tags | length - 1 %},{%endif%}

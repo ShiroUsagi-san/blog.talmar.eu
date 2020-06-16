@@ -1,9 +1,8 @@
 +++
 title = "hello word"
 date = 2020-05-25
-
 [taxonomies]
-tags = ["hello", "test"]
+tags = ["hello"]
 +++
 
 Salut à tous, ceci est mon premier sur ce blog flambant neuf, il est d'ailleurs encore en construction. Je posterais des articles sur mes aventures.
