@@ -10,7 +10,7 @@ tags = ["ctf", "writeups"]
 Du 5 au 7 juin dernier, j'ai pu participé au [Ractf](https://2020.ractf.co.uk), un CTF en ligne sur un week end, avec l'équipe du SDD, fraîchement créée pour l'occasion. L'objectif n'était clairement pas de finir sur le podium, mais nous avons quand même réussi à finir dans les 50 premières équipes de ce CTF.
 <!-- more -->
 # Mon retour sur le ctf
-Je me suis principalement concentré sur les challenges de type OSINT ou Open Source INTelligence, (Renseignement d'origine source ouverte en bon français), une discipline souvent mis en arrière plan mais qui constitue en général la première phase de reconnaissance d'une cible dans le cadre d'une attaque. Le but est de rassembler le plus d'information possible sur une cible afin de pouvoir mener en suite des campagnes de phising et d'ingénieurie sociale les plus efficaces possibles: on cherchera des adresses mails, des numéros de téléphones, des noms, des passions, des adresses, des lieux de toutes les personnes liées à une cible.
+Je me suis principalement concentré sur les challenges de type OSINT ou Open Source INTelligence, (Renseignement d'origine source ouverte en bon français), une discipline souvent mis en arrière plan mais qui constitue en général la première phase de reconnaissance d'une cible dans le cadre d'une attaque. Le but est de rassembler le plus d'information possible sur une cible afin de pouvoir mener en suite des campagnes de phishing et d'ingénieurie sociale les plus efficaces possibles: on cherchera des adresses mails, des numéros de téléphones, des noms, des passions, des adresses, des lieux de toutes les personnes liées à une cible.
 
 Cette introduction faite, passons au coeur du sujet: les différents challenge du **Ractf** 2020.
 ## Les challenges
