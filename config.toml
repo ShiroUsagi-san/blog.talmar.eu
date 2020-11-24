@@ -10,7 +10,6 @@ generate_rss = true
 feed_url = "https://blog.talmar.eu/articles"
 
 languages = [
-		  {code = "fr", rss=true, search=true},
 		  {code ="en"}
 ]
 taxonomies = [
