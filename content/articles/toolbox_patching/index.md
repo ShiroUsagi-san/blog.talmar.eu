@@ -29,7 +29,7 @@ void main(void){
 }
 ``` 
 
-notons qu'ici, le code est très simpliste, dans un but de démonstration, il est très rare de trouver des structures aussi simple en réalité.
+Notons qu'ici, le code est très simpliste, dans un but de démonstration, il est très rare de trouver des structures aussi simples en réalité.
 
 On compile avec gcc notre code et on l'execute, on obtient sans surprise `you're a simple human, sorry...`.
 
@@ -37,9 +37,9 @@ Mais nous allons maintenant tenter de rentrer dans le `if`.
 
 # Exploitation
 On allons utiliser deux techniques pour rentrer dans la boucle conditionnelle: on verra comment patcher le binaire avec `Cutter` puis avec une méthode plus brute et radicale avec `gdb`
-## Premiere méthode: Patch le binaire avec Cutter
+## Premiere méthode: Patcher le binaire avec Cutter
 ### Présentation de Cutter
-[Cutter](https://cutter.re/) est une interface GUI très sympa pour r2 ([radare2](https://rada.re/n/radare2.html)) un outil très pratique d'exploitation binaire. Dans ce billet, je n'entrerais pas en details dans le fonctionnement et l'utilisation de r2 qui est un outil extremement puissant et polyvalent et qui pourrait faire l'objet d'un article entier tant il est complet.
+[Cutter](https://cutter.re/) est une interface graphique très sympa pour r2 ([radare2](https://rada.re/n/radare2.html)), un outil très pratique d'exploitation binaire. Dans ce billet, je n'entrerai pas en details dans le fonctionnement et l'utilisation de r2 qui est un outil extremement puissant et polyvalent et qui pourrait faire l'objet d'un article entier tant il est complet.
 
 
 {{ resize_image(path="articles/toolbox_patching/images/interface_cutter.png", width=600, height=600, op="fit") }}
