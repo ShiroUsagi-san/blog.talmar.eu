@@ -54,7 +54,7 @@ On ouvre Cutter et on choisit bien l'option `-w` qui permet d'ouvrir le binaire 
 (3) enfin correspond à la partie navigation de Cutter, et on voit une bar qui montre la répartition des adresses mémoire utilisées par le programme analysé.
 
 ### Entrons dans le vif du sujet
-Maintenant, il est temps de mettre les main dans le cambouis. Comme je l'ai introduit precedemment, on peut naviguer directement à la fonction `main` en utilisant l'explorateur de symboles.
+Maintenant, il est temps de mettre les main dans le cambouis. Comme je l'ai introduit précédemment, on peut naviguer directement à la fonction `main` en utilisant l'explorateur de symboles.
 
 {{ resize_image(path="articles/toolbox_patching/images/main_function.png", width=600, height=600, op="fit") }}
 
@@ -67,24 +67,24 @@ je      0x1178 ; jump if equal to 0x1178
 ```
 C'est ici qu'on retrouve la gestion de la condition:
 
-On compare d'abord la variable, précedemment allouée, à 0.
-Puis l'instruction **je** ou **j**ump **e**qual permet de sauter à l'adresse **0x1178** si la condition est vérifiée. En réalité, sous le capot, `cmp` définit le **Zero flag** en fonction du résultat de la comparaison, mais nous y reviendront dans la deuxième technique.
+On compare d'abord la variable, précédemment allouée, à 0.
+Puis l'instruction **je** ou **j**ump **e**qual permet de sauter à l'adresse **0x1178** si la condition est vérifiée. En réalité, sous le capot, `cmp` définit le **Zero flag** en fonction du résultat de la comparaison, mais nous y reviendrons dans la deuxième technique.
 
 Regardons ce qui se passe à l'addresse **0x1178**, on peut d'ailleurs voir que Cutter nous indique d'une petite flèche où aller, c'est fort aimable.
 ```asm
 0x00001178      lea     rdi, str.you_re_a_simple_human__sorry... ; 0x2038 ; const char *s
 ```
-Grâce à radare2, on comprend très facilement ce que cette ligne fait: en effet, r2 nous donne `str.you_re_a_simple_human__sorry...`, ce qui veut dire qu'on arrive bien dans notre branchement `else` de notre code.
+Grâce à radare2, on comprend très facilement ce que cette ligne fait. En effet, r2 nous donne `str.you_re_a_simple_human__sorry...`, ce qui veut dire qu'on arrive bien dans notre branchement `else` de notre code.
 
 c'est bizarre non? La comparaison est vrai donc on rentre dans le branchement conditionnel `if` qui correspond au else de notre code: cette différence est probablement liée à une optimisation de *gcc*.
 
-Maintenant qu'on a localisé la portion de code assembleur qui nous interesse, réflechissons à ce qu'on veut modifier pour rentrer dans la condition.  Pour cela, on peut regarder du côté des instructions et des opcodes disponibles en x86 et plus précisement les instructions de sauts conditionnels:
+Maintenant qu'on a localisé la portion de code assembleur qui nous intéresse, réflechissons à ce qu'on veut modifier pour rentrer dans la condition.  Pour cela, on peut regarder du côté des instructions et des opcodes disponibles en x86 et plus précisement les instructions de sauts conditionnels:
 
 {{ resize_image(path="articles/toolbox_patching/images/extract_spec_x86.png", width=600, height=600, op="fit") }}
 
 On voit dans cette documentation que `JE`, d'opcode `0x74` effectue le saut si `ZF` est à 1. Mais on apprend également qu'il existe l'instruction inverse `JNE`, d'opcode `0x75` qui effectue le saut si `ZF` est à 0.
 
-Intéressant... Si on remplace `JE` par `JNE`, on ne sautera plus (puisque `ZF` sera toujours à 1) et on continuera le flux d'execution. Etudions ce qui suit notre jump:
+Intéressant... Si on remplace `JE` par `JNE`, on ne sautera plus (puisque `ZF` sera toujours à 1) et on continuera le flux d'exécution. Etudions ce qui suit notre jump:
 
 ```asm
 0x0000115e      lea     rdi, str.accessing_very_secret_part ; 0x2008 ; const char *s
@@ -93,9 +93,9 @@ Intéressant... Si on remplace `JE` par `JNE`, on ne sautera plus (puisque `ZF` 
 0x00001171      call    system     ; sym.imp.system ; int system(const char *string)
 ```
 
-Plusieurs points très interessants dans ce code: déjà, on retrouve la chaine `accessing_very_secret_part` qui permet de dire qu'on est dans la partie "protégée" du programme. De plus, on remarque un `call system` qui correspond à l'appel à notre fonction privilégiée. Bingo, c'est bien là où on veut aller. Il faut donc patcher (modifier) `JE` et le remplacer par `JNE`. 
+Plusieurs points très intéressants dans ce code: déjà, on retrouve la chaine `accessing_very_secret_part` qui permet de dire qu'on est dans la partie "protégée" du programme. De plus, on remarque un `call system` qui correspond à l'appel à notre fonction privilégiée. Bingo, c'est bien là où l'on veut aller. Il faut donc patcher (modifier) `JE` et le remplacer par `JNE`. 
 
-Mettons nous au travail. Depuis l'interface de Cutter, on peut editer l'instruction `JE` en `JNE`. Notez, qu'il est également possible de remplacer le `JE` par un `NOP` (NO oPeration) qui permet également de bypass la condition.
+Mettons nous au travail. Depuis l'interface de Cutter, on peut éditer l'instruction `JE` en `JNE`. Notez, qu'il est également possible de remplacer le `JE` par un `NOP` (NO oPeration) qui permet également de bypass la condition.
 
 {{ resize_image(path="articles/toolbox_patching/images/patch_instr.png", width=600, height=600, op="fit") }}
 
@@ -103,18 +103,18 @@ Ici, on remplace `je 0x1178` par `jne 0x1178` et radare2 va changer tout seul l'
 
 {{ resize_image(path="articles/toolbox_patching/images/success_patching.png", width=600, height=600, op="fit") }}
 
-Hourra, et si on lance maintenant le binaire, on obtient un magnifique `accessing very secret part` suivi de l'execution de notre programme sensible. Nous avons bien réussi à bypass la vérification \o/.
+Hourra, et si on lance maintenant le binaire, on obtient un magnifique `accessing very secret part` suivi de l'exécution de notre programme sensible. Nous avons bien réussi à bypass la vérification \o/.
 
 ## Deuxième méthode: utiliser GDB
 Nous avons vu une méthode très confortable pour éditer le binaire, mais maintenant, nous allons adopter une méthode plus brute et utile dans un contexte différent.
 ### Petite partie théorique
-Avant de rentrer dans le vif du sujet, nous allons rapidement revenir sur le concept d'**EFLAGS**. J'avais évoqué la notion de `ZF` dans la partie précédente, et je vous avez promis d'y revenir, et bien, c'est le moment! En effet, `ZF` ou Zero Flag fait parti des flags qui consistuent le registre de status dans un processeur x86. Ce registre est un peu particulier et contient des informations qui décrivent l'état du processeur à chaque instant pour chaque programme. Ce registre porte le nom de **FLAGS** et fait 16 bits. Il a été etendue à 32 et 64 bits pour les architectures modernes, avec respectivement les registres **EFLAGS** et **RFLAGS**.  Il y a de nombreux flags dans ce registre, je ne compte pas tous les présenter dans ce post mais on peut par exemple citer `PF` ou Parity Flag qui vaut 1 si le résultat de la derniere opération réalisée par le CPU est paire et 0 sinon ou encore `SF` pour Sign Flag, qui stock l'information du signe du résultat de la dernière operation. Mais `ZF` dans tout ça? Le Zero Flag stock le résultat de la derniere comparaison réalisée avec le CPU, notamment avec l'operation `cmp`. Plus exactement l'instruction `cmp a b` réalise une soustraction entre a et b et met `ZF` à 1 si la différence est nulle (i.e a et b sont identiques), 0 sinon. 
-Et les instructions de saut de la famille des `J` (comme JE, JNE, JZ, JNZ) se basent sur ce flag pour décider si un jump doit être fait ou pas. Voyez vous où je veux en venir? En effet, si on peut manipuler la valeur de `ZF`, on peut manipuler le flux d'execution conditionnel d'un programme!
+Avant de rentrer dans le vif du sujet, nous allons rapidement revenir sur le concept d'**EFLAGS**. J'avais évoqué la notion de `ZF` dans la partie précédente, et je vous avez promis d'y revenir, et bien, c'est le moment! En effet, `ZF` ou Zero Flag fait partie des flags qui consistuent le registre de status dans un processeur x86. Ce registre est un peu particulier et contient des informations qui décrivent l'état du processeur à chaque instant pour chaque programme. Ce registre porte le nom de **FLAGS** et fait 16 bits. Il a été étendue à 32 et 64 bits pour les architectures modernes, avec respectivement les registres **EFLAGS** et **RFLAGS**.  Il y a de nombreux flags dans ce registre, je ne compte pas tous les présenter dans ce post mais on peut par exemple citer `PF` ou Parity Flag qui vaut 1 si le résultat de la derniere opération réalisée par le CPU est paire et 0 sinon ou encore `SF` pour Sign Flag, qui stock l'information du signe du résultat de la dernière operation. Mais `ZF` dans tout ça? Le Zero Flag stock le résultat de la derniere comparaison réalisée avec le CPU, notamment avec l'operation `cmp`. Plus exactement l'instruction `cmp a b` réalise une soustraction entre a et b et met `ZF` à 1 si la différence est nulle (i.e a et b sont identiques), 0 sinon. 
+Et les instructions de saut de la famille des `J` (comme JE, JNE, JZ, JNZ) se basent sur ce flag pour décider si un jump doit être fait ou pas. Voyez vous où je veux en venir? En effet, si on peut manipuler la valeur de `ZF`, on peut manipuler le flux d'exécution conditionnel d'un programme!
 
 ### À l'attaque!
 Avec toutes ces bonnes idées en tête, nous allons nous attaquer au binaire déjà étudié en partie 1.
 
-Pour cette partie, nous utiliserons GDB. GDB ou GNU DeBugger est le debugger le plus populaire sous linux, il permet de poser des `breakpoints` dans un programme, d'executer instruction par instruction et de récuperer à chaque étape l'état du CPU. on le lance en muet avec l'option `-q`
+Pour cette partie, nous utiliserons GDB. GDB ou GNU DeBugger est le debugger le plus populaire sous linux, il permet de poser des `breakpoints` dans un programme, d'exécuter instruction par instruction et de récuperer à chaque étape l'état du CPU. on le lance en muet avec l'option `-q`
 
 {{ resize_image(path="articles/toolbox_patching/images/gdb_1.png", width=600, height=600, op="fit") }}
 
@@ -132,14 +132,14 @@ On peut voir la valeur de tout les registres classiques d'un processeur x86-64, 
 
 {{ resize_image(path="articles/toolbox_patching/images/eflags.png", width=600, height=600, op="fit") }}
 
-Il peut être interessant de s'arrêter quelques instant ici, pour mieux comprendre comment marche ce registre si particulier. nous avons vu que `EFLAGS` est un registre sur 16 bits (j'ai dit tout à l'heure que `EFLAGS` était étendue à 32 bits, mais pour des questions de simplicité, on allons ignorer les bits supplementaires). Mais concrètement, à quoi cela ressemble-t-il? Et bien, GDB peut nous aider à le comprendre: en effet, on peut utiliser la commande `print/x $eflags` pour afficher la valeur en he*x*adécimal du registre: 0x246. Pourquoi cette valeur? Pour mieux comprendre, il est préférable de regarder la valeur en binaire de 0x246, ce qui peut être fait avec en remplaçant x par t dans la commande precedente, et on obtient cette fois-ci: Ob1001000110 et tout devient plus clair. Les bits 2, 3, 7, 10 sont mis à 1, en comptant de droite à gauche. et on obtient bien les flags `PF`, `ZF` et `SF` comme prevu! Maintenant que nous savons lire le registre `EFLAGS`, il peut être intéressant de se demander comment manipuler ce registre. Comme beaucoup d'autres opérations bas niveau, il faut se pencher sur opérations bit à bit (ou bitwise operation).
+Il peut être intéressant de s'arrêter quelques instant ici, pour mieux comprendre comment marche ce registre si particulier. nous avons vu que `EFLAGS` est un registre sur 16 bits (j'ai dit tout à l'heure que `EFLAGS` était étendue à 32 bits, mais pour des questions de simplicité, on allons ignorer les bits supplementaires). Mais concrètement, à quoi cela ressemble-t-il? Et bien, GDB peut nous aider à le comprendre: en effet, on peut utiliser la commande `print/x $eflags` pour afficher la valeur en he*x*adécimal du registre: 0x246. Pourquoi cette valeur? Pour mieux comprendre, il est préférable de regarder la valeur en binaire de 0x246, ce qui peut être fait avec en remplaçant x par t dans la commande precedente, et on obtient cette fois-ci: Ob1001000110 et tout devient plus clair. Les bits 2, 3, 7, 10 sont mis à 1, en comptant de droite à gauche. et on obtient bien les flags `PF`, `ZF` et `SF` comme prevu! Maintenant que nous savons lire le registre `EFLAGS`, il peut être intéressant de se demander comment manipuler ce registre. Comme beaucoup d'autres opérations bas niveau, il faut se pencher sur opérations bit à bit (ou bitwise operation).
 
 > En logique, une opération bit à bit est un calcul manipulant les données directement au niveau des bits, selon une arithmétique booléenne *- Wikipedia*
 
 l'[article](https://fr.wikipedia.org/wiki/Op%C3%A9ration_bit_%C3%A0_bit) wikipédia donne tout les éléments qui vont nous être utiles ici: décalage à gauche (ou plus couramment left bit shift), ou exclusif et ou (xor et or) vont être nos principaux outils.
 
 ### à l'attaque (le retour)
-Maintenant que l'on sait où on va, on peut revenir à GDB, et **s**tep **i**instruction (si) pour executer la prochaine instruction puis mettre en pause le programme.On peut regarder ou nous sommes dans le binaire à l'aide de `disass` qui indique par une flèche la ligne où nous sommes arrêtés. nous allons jusqu'à l'instruction de jump.
+Maintenant que l'on sait où on va, on peut revenir à GDB, et **s**tep **i**instruction (si) pour exécuter la prochaine instruction puis mettre en pause le programme.On peut regarder ou nous sommes dans le binaire à l'aide de `disass` qui indique par une flèche la ligne où nous sommes arrêtés. nous allons jusqu'à l'instruction de jump.
  
 {{ resize_image(path="articles/toolbox_patching/images/stepi_gdb.png", width=600, height=600, op="fit") }}
 
