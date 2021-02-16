@@ -2,8 +2,9 @@ base_url = "https://blog.talmar.eu"
 title = "Mahal's blog"
 compile_sass = true
 default_language = "fr"
+
 highlight_code = true
-highlight_theme = "dracula"
+smart_punctuation = true
 build_search_index = true
 
 generate_rss = true

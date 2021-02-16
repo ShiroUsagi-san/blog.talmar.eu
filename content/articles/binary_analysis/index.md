@@ -7,8 +7,9 @@ draft= true
 [taxonomies]
 tags = ["binary", "analysis"]
 +++
-Depuis plusieurs semaines déjà, je suis parti à l'exploration des formats executables les plus communs: ELF et PE.
 
+Pour cette première serie d'articles sur ce blog, on partira à l'exploration des formats de fichiers les plus communs.
 Dans ce premier article, on s'attaquera au format ELF, le format d'executable linux.
 
 # Par où commencer nos recherches? 
+Comme beaucoup d'autres recherches, on 
