@@ -47,14 +47,14 @@ On allons utiliser deux techniques pour rentrer dans la boucle conditionnelle: o
 On ouvre Cutter et on choisit bien l'option `-w` qui permet d'ouvrir le binaire en lecture et en écriture. Ensuite, l'interface principale de Cutter apparaît. Présentons succintement cette interface:
 {{ resize_image(path="articles/toolbox_patching/images/main_window_cutter.png", width=800, height=800, op="fit") }}
 
-(1) correspond à l'interface principale de Cutter, par défaut, on atteri sur l'onglet `dissassembly` qui permet d'avoir un code desassemblé du binaire ouvert, et en bas, plusieurs onglets permettent de naviguer dans les différentes vues.
+(1) correspond à l'interface principale de Cutter, par défaut, on atterit sur l'onglet `dissassembly` qui permet d'avoir un code desassemblé du binaire ouvert, et en bas, plusieurs onglets permettent de naviguer dans les différentes vues.
 
-(2) correspond à l'explorateur de symboles du binaire: il liste tout les symboles et les différentes fonctions, et permet de faire des recherches dessus. On note d'ailleurs la présente de la fonction *main* qui va nous concerner très bientôt.
+(2) correspond à l'explorateur de symboles du binaire: il liste tout les symboles et les différentes fonctions, et permet de faire des recherches dessus. On note d'ailleurs la présence de la fonction *main* qui va nous concerner très bientôt.
 
 (3) enfin correspond à la partie navigation de Cutter, et on voit une bar qui montre la répartition des adresses mémoire utilisées par le programme analysé.
 
 ### Entrons dans le vif du sujet
-Maintenant, il est tant de mettre les main dans le cambouis. Comme je l'ai introduit precedemment, on peut naviguer directement à la fonction `main` en utilisant l'explorateur de symboles.
+Maintenant, il est temps de mettre les main dans le cambouis. Comme je l'ai introduit precedemment, on peut naviguer directement à la fonction `main` en utilisant l'explorateur de symboles.
 
 {{ resize_image(path="articles/toolbox_patching/images/main_function.png", width=600, height=600, op="fit") }}
 
