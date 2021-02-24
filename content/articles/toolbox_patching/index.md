@@ -39,7 +39,7 @@ Mais nous allons maintenant tenter de rentrer dans le `if`.
 On allons utiliser deux techniques pour rentrer dans la boucle conditionnelle: on verra comment patcher le binaire avec `Cutter` puis avec une méthode plus brute et radicale avec `gdb`
 ## Premiere méthode: Patcher le binaire avec Cutter
 ### Présentation de Cutter
-[Cutter](https://cutter.re/) est une interface graphique très sympa pour r2 ([radare2](https://rada.re/n/radare2.html)), un outil très pratique d'exploitation binaire. Dans ce billet, je n'entrerai pas en details dans le fonctionnement et l'utilisation de r2 qui est un outil extremement puissant et polyvalent et qui pourrait faire l'objet d'un article entier tant il est complet.
+[Cutter](https://cutter.re/) est une interface graphique très sympa pour r2 ([radare2](https://rada.re/n/radare2.html)), un outil très pratique d'exploitation binaire. Dans ce billet, je n'entrerai pas en details dans le fonctionnement et l'utilisation de r2 qui est un outil extrêmement puissant et polyvalent et qui pourrait faire l'objet d'un article entier tant il est complet.
 
 
 {{ resize_image(path="articles/toolbox_patching/images/interface_cutter.png", width=600, height=600, op="fit") }}
@@ -49,12 +49,12 @@ On ouvre Cutter et on choisit bien l'option `-w` qui permet d'ouvrir le binaire 
 
 (1) correspond à l'interface principale de Cutter, par défaut, on atterrit sur l'onglet `dissassembly` qui permet d'avoir un code desassemblé du binaire ouvert, et en bas, plusieurs onglets permettent de naviguer dans les différentes vues.
 
-(2) correspond à l'explorateur de symboles du binaire: il liste tout les symboles et les différentes fonctions, et permet de faire des recherches dessus. On note d'ailleurs la présence de la fonction *main* qui va nous concerner très bientôt.
+(2) correspond à l'explorateur de symboles du binaire: il liste tous les symboles et les différentes fonctions, et permet de faire des recherches dessus. On note d'ailleurs la présence de la fonction *main* qui va nous concerner très bientôt.
 
 (3) enfin correspond à la partie navigation de Cutter, et on voit une bar qui montre la répartition des adresses mémoire utilisées par le programme analysé.
 
 ### Entrons dans le vif du sujet
-Maintenant, il est temps de mettre les main dans le cambouis. Comme je l'ai introduit précédemment, on peut naviguer directement à la fonction `main` en utilisant l'explorateur de symboles.
+Maintenant, il est temps de mettre les main dans le cambouis. Comme je l'ai introduit précédemment, on peut naviguer directement vers la fonction `main` en utilisant l'explorateur de symboles.
 
 {{ resize_image(path="articles/toolbox_patching/images/main_function.png", width=600, height=600, op="fit") }}
 
@@ -84,7 +84,7 @@ Maintenant qu'on a localisé la portion de code assembleur qui nous intéresse, 
 
 On voit dans cette documentation que `JE`, d'opcode `0x74` effectue le saut si `ZF` est à 1. Mais on apprend également qu'il existe l'instruction inverse `JNE`, d'opcode `0x75` qui effectue le saut si `ZF` est à 0.
 
-Intéressant... Si on remplace `JE` par `JNE`, on ne sautera plus (puisque `ZF` sera toujours à 1) et on continuera le flux d'exécution. Etudions ce qui suit notre jump:
+Intéressant... Si on remplace `JE` par `JNE`, on ne sautera plus (puisque `ZF` sera toujours à 1) et on continuera le flux d'exécution. Étudions ce qui suit notre jump:
 
 ```asm
 0x0000115e      lea     rdi, str.accessing_very_secret_part ; 0x2008 ; const char *s
@@ -93,9 +93,9 @@ Intéressant... Si on remplace `JE` par `JNE`, on ne sautera plus (puisque `ZF` 
 0x00001171      call    system     ; sym.imp.system ; int system(const char *string)
 ```
 
-Plusieurs points très intéressants dans ce code: déjà, on retrouve la chaine `accessing_very_secret_part` qui permet de dire qu'on est dans la partie "protégée" du programme. De plus, on remarque un `call system` qui correspond à l'appel à notre fonction privilégiée. Bingo, c'est bien là où l'on veut aller. Il faut donc patcher (modifier) `JE` et le remplacer par `JNE`. 
+Plusieurs points très intéressants dans ce code: déjà, on retrouve la chaîne `accessing_very_secret_part` qui permet de dire qu'on est dans la partie "protégée" du programme. De plus, on remarque un `call system` qui correspond à l'appel à notre fonction privilégiée. Bingo, c'est bien là où l'on veut aller. Il faut donc patcher (modifier) `JE` et le remplacer par `JNE`. 
 
-Mettons nous au travail. Depuis l'interface de Cutter, on peut éditer l'instruction `JE` en `JNE`. Notez, qu'il est également possible de remplacer le `JE` par un `NOP` (NO oPeration) qui permet également de bypass la condition.
+Mettons-nous au travail. Depuis l'interface de Cutter, on peut éditer l'instruction `JE` en `JNE`. Notez, qu'il est également possible de remplacer le `JE` par un `NOP` (NO oPeration) qui permet également de bypass la condition.
 
 {{ resize_image(path="articles/toolbox_patching/images/patch_instr.png", width=600, height=600, op="fit") }}
 
