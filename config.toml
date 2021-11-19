@@ -10,9 +10,6 @@ build_search_index = true
 generate_rss = true
 feed_url = "https://blog.talmar.eu/articles"
 
-languages = [
-		  {code ="en"}
-]
 taxonomies = [
 		   {name = "tags", rss=true }
 ]
