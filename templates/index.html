@@ -1,61 +1,10 @@
-
-{% import "macros.html" as macros %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name='author' content='{{ config.extra.author }}'>
-    <link rel="stylesheet" href="/main.css">
-    <title>{{ config.title }}</title>
-    {% if page.extra.katex %}
-        {{ macros::katex() }}
-    {% endif %}
-</head>
-<body>
-    <div class="site-container">
-        <header class="site-header">
-            <nav class="site-nav">
-                <a href='{{ config.base_url }}/' class='{% if not page.path %} active {% endif %}'>$home </a>
-                <a href='{{ config.base_url }}/projects' class='{% if page %}{% if page.path == "/projects" %} active {% endif %}{% endif %}'>$Projects</a>
-                <a href='{{ config.base_url }}/about' class='{% if page %}{% if page.path == "/about" %} active {% endif %}{% endif %}'>$About</a>
-            </nav>
-        {% block page_title %}
-            <h1 class="site-title">/home/<span id="typewriter"></span></h1>
-        {% endblock %}
-        <hr>
-        </header>
-    <main class="site-content">
-	{% block content %}
-        <ul class="articles">
-            {% set articles = get_section(path="articles/_index.md") %}
-            {% for article in articles.pages %}
-                <li><span class="article-meta">{{ article.date | date(format="%d-%m-%Y") }}</span> - <a href='{{ article.permalink }}'>{{ article.title }}</a>
-                {% if article.taxonomies %}
-                    [{% for tag in article.taxonomies.tags %}
-                        <a class="article-meta"href='{{ get_taxonomy_url(kind="tags", name=tag) | safe }}'>{{ tag }}</a>{% if loop.index == article.taxonomies.tags | length - 1 %},{%endif%}
-                    {% endfor %}]
-                {% endif %}
-                <div class="article-summary">
-                    <p>{{ article.summary  | safe }} ...</p>
-                    <span class="read-more"><a href="{{ article.permalink }}">lire la suite</a></span>
-                </div> 
-                </li>
-            {% endfor %}
-        </ul>
-        {% endblock %}
-        </main>
-        <hr>
-        <footer class="site-footer" id="media">
-		  {% block footer %}
-		  <div class="media-list">
-			<a href='{{ config.base_url }}/rss.xml'>rss</a> -
-			<a href='{{ config.base_url }}/tags'>tags</a>
-          </div>
-		  {% endblock footer %}
-        </footer>
-    </div>
-
-</body>
-</html>
+{% extends "base.html" %}
+    {% block page_title %}
+        <h1 class="site-title">cat /home/me.md<span id="typewriter"></span></h1>
+    {% endblock %}
+    <hr>
+    </header>
+<main class="site-content">
+{% block content %}
+        {{ section.content  | safe }}
+{% endblock content %}

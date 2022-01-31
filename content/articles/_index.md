@@ -1,6 +1,6 @@
 +++
-render = false
 sort_by = "date"
-page_template= "article.html"
+title = "Liste des articles"
 transparent = true
+page_template ="article.html"
 +++

@@ -69,6 +69,10 @@ a {
 .article-header > p, .article-header > a{
     color: $meta-color;
 }
+strong {
+    font-weight: bolder;
+    color: #e2bb5f;
+}
 footer {
     display: flex;
     justify-content: center;

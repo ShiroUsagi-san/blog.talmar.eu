@@ -1,0 +1,33 @@
+{% extends "index.html" %}
+
+{% block page_title %}
+<h1 class="article-header"><span id="typewriter">ls ~/articles</span> </h1>
+{% endblock %}
+{% block content %}
+    <ul class="articles">
+        {% set articles = get_section(path="articles/_index.md") %}
+        {% for article in articles.pages %}
+            <li><span class="article-meta">{{ article.date | date(format="%d-%m-%Y") }}</span> - <a href='{{ article.permalink }}'>{{ article.title }}</a>
+            <!--{% if article.taxonomies %}
+                [{% for tag in article.taxonomies.tags %}
+                    <a class="article-meta"href='{{ get_taxonomy_url(kind="tags", name=tag) | safe }}'>{{ tag }}</a>{% if loop.index == article.taxonomies.tags | length - 1 %},{%endif%}
+                {% endfor %}]
+            {% endif %}-->
+            <div class="article-summary">
+                <p>{{ article.summary  | safe }} ...</p>
+                <span class="read-more"><a href="{{ article.permalink }}">lire la suite</a></span>
+            </div> 
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock content %}
+</main>
+<hr>
+<footer class="site-footer" id="media">
+  {% block footer %}
+  <!-- <div class="media-list">
+    <a href='{{ config.base_url }}/rss.xml'>rss</a> -
+    <a href='{{ config.base_url }}/tags'>tags</a>
+  </div> -->
+  {% endblock footer %}
+</footer>
