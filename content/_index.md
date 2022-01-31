@@ -7,4 +7,4 @@ Hello there, I'm Téo Nespoulet, alias Mahal, a french **Electronics and Telecom
 The website contains mainly my [projects](/projects) and [articles](/articles) (mostly in french for now) on topics that I like to dive in.
 
 # ls ~/rumps
-- [barbhack 2021](https://www.barbhack.fr/en/): Run a LAN in 2021, aftermath (in french) [@gallium](https://darkgallium.github.io) [slides](https://darkgallium.github.io/rump-barbhack-2021/#/)
+- [barbhack 2021](https://www.barbhack.fr/en/): running a LAN in 2021: a retrospective (in french) [@gallium](https://darkgallium.github.io) [slides](https://darkgallium.github.io/rump-barbhack-2021/#/)
