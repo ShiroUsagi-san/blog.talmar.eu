@@ -12,12 +12,10 @@
 ul {
     list-style-type: square;
 }
-a:hover::before{
-   content: ">";
+a:hover{
+   border-bottom: none;
 }
-a::before {
-    content: "$";
-}
+
 
 @keyframes blink-caret {
     from, to { border-color: transparent }
