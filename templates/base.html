@@ -7,30 +7,38 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name='author' content='{{ config.extra.author }}'>
     <link rel="stylesheet" href="/main.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%2210 0 100 100%22><text y=%22.90em%22 font-size=%2290%22>👨‍🎓</text></svg>">
+
+<link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@700&display=swap" rel="stylesheet"> 
     <title>{{ config.title }}</title>
     {% if page.extra.katex %}
         {{ macros::katex() }}
-    {% endif %}
+	{% endif %}
 </head>
 <body>
     <div class="site-container">
         <header class="site-header">
+		<a href="/">
+	    <div class="left">
+		    <img class="profile" src="/mahal.png" width="48" height="48"/>
+		    <h1> Mahal </h1>
+	    </div>
+		</a>
             <nav class="site-nav">
-                <a href='{{ config.base_url }}/' class='{% if not page.path %} active {% endif %}'>$Home </a>
-                <a href='{{ config.base_url }}/projects' class='{% if page %}{% if page.path == "/projects" %} active {% endif %}{% endif %}'>$Projects</a>
-                <a href='{{ config.base_url}}/articles' class='{% if page %}{%if page.path == "/articles"%} active {% endif %}{% endif %}'>$Articles</a> 
+                <a href='{{ config.base_url }}/' class='{% if not page.path %} active {% endif %}'>Home </a>
+                <a href='{{ config.base_url }}/projects' class='{% if page %}{% if page.path == "/projects" %} active {% endif %}{% endif %}'>Projects</a>
+                <a href='{{ config.base_url}}/articles' class='{% if page %}{%if page.path == "/articles"%} active {% endif %}{% endif %}'>Articles</a> 
             </nav>
+        </header>
         {% block page_title %}
         {% endblock %}
-        <hr>
-        </header>
     <main class="site-content">
 	{% block content %}
     {% endblock content %}
         </main>
-        <hr>
       <footer class="site-footer" id="media">
 		  {% block footer %}
+		  <p>Site made with Zola</p>
 		  <!-- <div class="media-list">
 			<a href='{{ config.base_url }}/rss.xml'>rss</a> -
 			<a href='{{ config.base_url }}/tags'>tags</a>

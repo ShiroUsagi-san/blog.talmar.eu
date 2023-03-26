@@ -1,11 +1,35 @@
-$base-font-family: 'Inconsolata', serif;
-$title-font-family: 'Noto Sans', serif;
+$base-font-family: 'Grotesk-Regular', serif;
+$title-font-family: 'Clash Grotesk', serif;
+$bold-font-family: 'Inter-Bold', serif;
+
+@font-face {
+    font-family: 'Grotesk-Regular';
+    src: url('fonts/SpaceGrotesk_Complete/Fonts/WEB/fonts/SpaceGrotesk-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Grotesk-Bold';
+    src: url('fonts/ClashGrotek_Complete/Fonts/WEB/fonts/ClashGrotesk-Bold.ttf') format('truetype');
+    font-weight: bold;
+}
+
+
+@font-face {
+    font-family: 'Grotesk-Thin';
+    src: url('fonts/Space_Grotesk/static/SpaceGrotesk-Thin.ttf') format('truetype');
+    font-weight: normal;
+    font-style: lighter;
+}
+
 
 $background-color:#1b1b1b ;
 $text-color: #D8D8D8;
 $hover-color: #A1B56C;
 $meta-color: #4b4848;
-@import url("https://fonts.googleapis.com/css?family=Inconsolata|Noto+Sans|Noto+Serif|Roboto+Mono");
+$link-color: #526e29;
+$hl-color: #a5ff1c;
 
 @import "base";
 @import "effects";
