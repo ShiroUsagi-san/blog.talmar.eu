@@ -1,4 +1,4 @@
-{% set image = resize_image(path=path, width=width, height=height, op=op, format="auto")  %}
+{% set image = resize_image(path=page.colocated_path ~ path, width=width, height=height, op=op, format="auto")  %}
 <center>
     <img id="centered" src="{{ image.url }}" />
 </center>

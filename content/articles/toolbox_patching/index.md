@@ -42,10 +42,10 @@ On allons utiliser deux techniques pour rentrer dans la boucle conditionnelle: o
 [Cutter](https://cutter.re/) est une interface graphique très sympa pour r2 ([radare2](https://rada.re/n/radare2.html)), un outil très pratique d'exploitation binaire. Dans ce billet, je n'entrerai pas en details dans le fonctionnement et l'utilisation de r2 qui est un outil extrêmement puissant et polyvalent et qui pourrait faire l'objet d'un article entier tant il est complet.
 
 
-{{ resize_image(path="articles/toolbox_patching/images/interface_cutter.png", width=600, height=600, op="fit") }}
+{{ resize_image(path="images/interface_cutter.png", width=600, height=600, op="fit") }}
 
 On ouvre Cutter et on choisit bien l'option `-w` qui permet d'ouvrir le binaire en lecture et en écriture. Ensuite, l'interface principale de Cutter apparaît. Présentons succintement cette interface:
-{{ resize_image(path="articles/toolbox_patching/images/main_window_cutter.png", width=800, height=800, op="fit") }}
+{{ resize_image(path="images/main_window_cutter.png", width=800, height=800, op="fit") }}
 
 (1) correspond à l'interface principale de Cutter, par défaut, on atterrit sur l'onglet `dissassembly` qui permet d'avoir un code desassemblé du binaire ouvert, et en bas, plusieurs onglets permettent de naviguer dans les différentes vues.
 
@@ -56,7 +56,7 @@ On ouvre Cutter et on choisit bien l'option `-w` qui permet d'ouvrir le binaire 
 ### Entrons dans le vif du sujet
 Maintenant, il est temps de mettre les main dans le cambouis. Comme je l'ai introduit précédemment, on peut naviguer directement vers la fonction `main` en utilisant l'explorateur de symboles.
 
-{{ resize_image(path="articles/toolbox_patching/images/main_function.png", width=600, height=600, op="fit") }}
+{{ resize_image(path="images/main_function.png", width=600, height=600, op="fit") }}
 
 De l'assembleur... Bon gardons notre calme. Même sans grande connaissance de l'assembleur, il est plutôt aisé de comprendre ces lignes. Les instructions de `0x1149` à `0x114d` constituent le *prologue* de la fonction, et permettent de pousser sur la pile (la stack) les arguments de la fonction main.
 
@@ -80,7 +80,7 @@ c'est bizarre non? La comparaison est vrai donc on rentre dans le branchement co
 
 Maintenant qu'on a localisé la portion de code assembleur qui nous intéresse, réflechissons à ce qu'on veut modifier pour rentrer dans la condition.  Pour cela, on peut regarder du côté des instructions et des opcodes disponibles en x86 et plus précisement les instructions de sauts conditionnels:
 
-{{ resize_image(path="articles/toolbox_patching/images/extract_spec_x86.png", width=600, height=600, op="fit") }}
+{{ resize_image(path="images/extract_spec_x86.png", width=600, height=600, op="fit") }}
 
 On voit dans cette documentation que `JE`, d'opcode `0x74` effectue le saut si `ZF` est à 1. Mais on apprend également qu'il existe l'instruction inverse `JNE`, d'opcode `0x75` qui effectue le saut si `ZF` est à 0.
 
@@ -97,11 +97,11 @@ Plusieurs points très intéressants dans ce code: déjà, on retrouve la chaîn
 
 Mettons-nous au travail. Depuis l'interface de Cutter, on peut éditer l'instruction `JE` en `JNE`. Notez, qu'il est également possible de remplacer le `JE` par un `NOP` (NO oPeration) qui permet également de bypass la condition.
 
-{{ resize_image(path="articles/toolbox_patching/images/patch_instr.png", width=600, height=600, op="fit") }}
+{{ resize_image(path="/images/patch_instr.png", width=600, height=600, op="fit") }}
 
 Ici, on remplace `je 0x1178` par `jne 0x1178` et radare2 va changer tout seul l'opcode (on passe bien de `0x74` à `0x75`). Voilà, le binaire est patché :) . On peut quitter Cutter et vérfier cela avec `objdump`, un autre outil bien pratique à tout reverse engineer qui se respecte. On lance `objdump --disassemble=main ./vuln` qui permet desassembler la fonction main et on observe bien le changement d'opcode:
 
-{{ resize_image(path="articles/toolbox_patching/images/success_patching.png", width=600, height=600, op="fit") }}
+{{ resize_image(path="images/success_patching.png", width=600, height=600, op="fit") }}
 
 Hourra, et si on lance maintenant le binaire, on obtient un magnifique `accessing very secret part` suivi de l'exécution de notre programme sensible. Nous avons bien réussi à bypass la vérification \o/.
 
@@ -116,21 +116,21 @@ Avec toutes ces bonnes idées en tête, nous allons nous attaquer au binaire dé
 
 Pour cette partie, nous utiliserons GDB. GDB ou GNU DeBugger est le debugger le plus populaire sous linux, il permet de poser des `breakpoints` dans un programme, d'exécuter instruction par instruction et de récuperer à chaque étape l'état du CPU. on le lance en muet avec l'option `-q`
 
-{{ resize_image(path="articles/toolbox_patching/images/gdb_1.png", width=600, height=600, op="fit") }}
+{{ resize_image(path="images/gdb_1.png", width=600, height=600, op="fit") }}
 
 r est un raccourci de la commande run, qui permet de lancer le binaire, et on obtient notre habituel message qui nous signale que nous ne sommes que de simples humains. ensuite GDB quitte le programme et nous affiche le pid (process ID) du programme ainsi que son code d'arrêt. Plutôt décu? Nous allons maintenant commencer à vraiment utiliser la puissance de gdb: la première étape est de desassembler la fonction `main` afin de savoir où poser un point d'arrêt intéressant.
 On va utiliser la commande `set disassembly-flavor intel` pour demander à gdb d'afficher le code assembleur avec la synthaxe intel, qui est plus simple à lire
 
 
-{{ resize_image(path="articles/toolbox_patching/images/disass_gdb.png", width=600, height=600, op="fit") }}
+{{ resize_image(path="images/disass_gdb.png", width=600, height=600, op="fit") }}
 
 Vous commencez à être habitués, voici le code assembleur de notre fonction main, qui ressemble beaucoup à celui qu'on avait trouvé avec Cutter. On reconnait l'instruction de comparaison puis le saut conditionnel, et on sait maintenant qu'il va falloir manipuler le fameux registre `FLAGS` à ce moment là. Mais pour pouvoir étudier en détail ce qu'il se passe, on va poser notre breakpoint au début de la fonction main, en utilisant la commande `b *main` pour *b*reak au symbole main (d'où la présence de l'astérisque). On relance avec `r`. Cette fois ci, gdb nous indique un breakpoint et son adresse dans la mémoire: le programme est en pause. Maintenant, on peut inspecter l'état des registres du processeur au moment de la pause, en utilisant la commande `info register` ou `i r`.
-{{ resize_image(path="articles/toolbox_patching/images/info_regs.png", width=600, height=600, op="fit") }}
+{{ resize_image(path="images/info_regs.png", width=600, height=600, op="fit") }}
 
 On peut voir la valeur de tout les registres classiques d'un processeur x86-64, comme le pointeur d'instruction rip (le r signifique qu'il pointe des instructions de 64 bits). Mais on voit également `eflags`, le fameux registre d'états! GDB nous indique directement les flags qui sont actifs: `PF` le flag de parité, `ZF` notre flag cible, ainsi que le flag de signe `SF`.
 ### Un peu de binaire
 
-{{ resize_image(path="articles/toolbox_patching/images/eflags.png", width=600, height=600, op="fit") }}
+{{ resize_image(path="images/eflags.png", width=600, height=600, op="fit") }}
 
 Il peut être intéressant de s'arrêter quelques instant ici, pour mieux comprendre comment marche ce registre si particulier. nous avons vu que `EFLAGS` est un registre sur 16 bits (j'ai dit tout à l'heure que `EFLAGS` était étendue à 32 bits, mais pour des questions de simplicité, on allons ignorer les bits supplementaires). Mais concrètement, à quoi cela ressemble-t-il? Et bien, GDB peut nous aider à le comprendre: en effet, on peut utiliser la commande `print/x $eflags` pour afficher la valeur en he*x*adécimal du registre: 0x246. Pourquoi cette valeur? Pour mieux comprendre, il est préférable de regarder la valeur en binaire de 0x246, ce qui peut être fait avec en remplaçant x par t dans la commande precedente, et on obtient cette fois-ci: Ob1001000110 et tout devient plus clair. Les bits 2, 3, 7, 10 sont mis à 1, en comptant de droite à gauche. et on obtient bien les flags `PF`, `ZF` et `SF` comme prevu! Maintenant que nous savons lire le registre `EFLAGS`, il peut être intéressant de se demander comment manipuler ce registre. Comme beaucoup d'autres opérations bas niveau, il faut se pencher sur opérations bit à bit (ou bitwise operation).
 
@@ -141,18 +141,18 @@ l'[article](https://fr.wikipedia.org/wiki/Op%C3%A9ration_bit_%C3%A0_bit) wikipé
 ### à l'attaque (le retour)
 Maintenant que l'on sait où on va, on peut revenir à GDB, et **s**tep **i**instruction (si) pour exécuter la prochaine instruction puis mettre en pause le programme.On peut regarder ou nous sommes dans le binaire à l'aide de `disass` qui indique par une flèche la ligne où nous sommes arrêtés. nous allons jusqu'à l'instruction de jump.
  
-{{ resize_image(path="articles/toolbox_patching/images/stepi_gdb.png", width=600, height=600, op="fit") }}
+{{ resize_image(path="images/stepi_gdb.png", width=600, height=600, op="fit") }}
 
 La petite flèche nous indique que nous sommes arrivés. Si vous avez bien compris jusqu'ici, on doit trouver dans le registre EFLAGS le flag `ZF` à 1, car cmp a bien renvoyé 0. Si on vérifie avec `i r`, tout est bon. Et maintenant, nous allons utiliser des opérations bit à bit ainsi que la commande `set` de gdb pour passer le flag `ZF` à 0. 
 
-{{ resize_image(path="articles/toolbox_patching/images/changed_eflags.png", width=600, height=600, op="fit") }}
+{{ resize_image(path="images/changed_eflags.png", width=600, height=600, op="fit") }}
 
 Qu'est ce que fait la ligne `set $eflags ^= (1 << 6)`? Et bien, elle applique l'operation xor sur le registre eflags avec la valeur binaire `1 << 6` ou 100000 (`<< n ` signifie un décalage vers la gauche, le sens des chevrons, de `n` bits).
 on obtient donc 1 xor 1 = 0, puisque le ZF est déjà à 1 et se trouve en 7 ème position du registre(on commence bien à compter à 0). les autres registres restent inchangés.
 
 Finalement, on obtient bien la partie protégée et on a bien contournée la vérification, victoire!
 
-{{ resize_image(path="articles/toolbox_patching/images/end_gdb.png", width=600, height=600, op="fit") }}
+{{ resize_image(path="images/end_gdb.png", width=600, height=600, op="fit") }}
 
 # Conclusion
 Dans ce court article, je vous ai presenté quelques techniques de bases pour contourner la vérification d'une condition, mais également quelques outils très utiles lorsqu'on veut manipuler et étudier le comportement de binaire. Je ne suis pas allé très loin dans les détails d'implementation ni dans le fonctionnement exacte du registre EFLAGS, car cela sortait du cadre de cet article. De plus, ce sont des techniques appliquées dans des cas très simples, mais la logique restera similaire si l'on veut contourner une protection logicielle mal implementée, l'objectif restera de contourner les mecanismes de verification. Je pense consacrer un prochain article à l'utilisation plus poussée de Cutter et radare2, et à des techniques de reverse plus avancées.
