@@ -10,6 +10,9 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%2210 0 100 100%22><text y=%22.90em%22 font-size=%2290%22>👨‍🎓</text></svg>">
 
 <link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@700&display=swap" rel="stylesheet"> 
+<link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/solarized-dark.min.css">
+<script src="/highlight/highlight.min.js"></script>
     <title>{{ config.title }}</title>
     {% if page.extra.katex %}
         {{ macros::katex() }}
@@ -42,10 +45,11 @@
 		  <!-- <div class="media-list">
 			<a href='{{ config.base_url }}/rss.xml'>rss</a> -
 			<a href='{{ config.base_url }}/tags'>tags</a>
-          </div> -->
-		  {% endblock footer %}
+          </div> --
+		  {% endblock footer %} --!>
         </footer>
     </div>
-
 </body>
+
+<script>hljs.highlightAll();</script>
 </html>

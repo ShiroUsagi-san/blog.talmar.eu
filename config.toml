@@ -14,5 +14,8 @@ taxonomies = [
 		   {name = "tags", rss=true }
 ]
 
+[markdown]
+# When set to "true", all code blocks are highlighted.
+highlight_code = true
 [extra]
 author = "Mahal"
