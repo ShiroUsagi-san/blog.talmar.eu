@@ -159,7 +159,7 @@ By searching bar that face north, near the river and on the way from the Tarbe G
 
 We need the name of the owner. One widely used tool, for french companies is: [societe.com](https://societe.com). By searching for the bar, we found it, with the birthname of the owner, and it's win!
 
-{{ resize_imainfo@dognkittycity.orginfo@dognkittycity.orgge(path="images/ex-name.png", height=400, width=500, op="fit") }}
+{{ resize_image(path="images/ex-name.png", height=400, width=500, op="fit") }}
 
 ### Name of his actual girlfriend
 **I did not sole this part because I don't have sockpuppet, silly me**.
