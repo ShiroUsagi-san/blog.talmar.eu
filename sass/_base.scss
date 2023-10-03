@@ -48,7 +48,7 @@ body {
 .site-content a {
 	color: $link-color;
 	&:hover {
-		color: #384f15;
+		color: $hover-color;
 	}
 
 }
