@@ -224,7 +224,7 @@ io.close()
 ```
 
 C'est tres pratique car cela permet de se concentrer sur le challenge uniquement et pas sur l'interface avec le serveur. 
-Il faut realiser un tri et il existe une grande variete d'algorithmes de tri. La [page](https://en.wikipedia.org/wiki/Sorting_algorithm#Comparison_of_algorithms) wikipedia permet d'avoir une bonne idee de quel algo utiliser et quand. J'ai decide d'implementer un tri rapide (ou quicksort en anglais) car ce challenge vient avant [Tri très selectif](#tri-tres-selectif-103-pts-six-p) ou les performances du tri ont une importance.
+Il faut realiser un tri et il existe une grande variete d'algorithmes de tri. La [page](https://en.wikipedia.org/wiki/Sorting_algorithm#Comparison_of_algorithms) wikipedia permet d'avoir une bonne idee de quel algo utiliser et quand. J'ai decide d'implementer un tri rapide (ou quicksort en anglais) car ce challenge vient avant Tri très selectif ou les performances du tri ont une importance.
 
 ```Python
 #!/usr/bin/env python3  
