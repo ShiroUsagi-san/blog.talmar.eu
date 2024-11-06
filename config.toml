@@ -3,12 +3,10 @@ title = "Mahal's blog"
 compile_sass = true
 default_language = "fr"
 
-highlight_code = true
-smart_punctuation = true
 build_search_index = true
 
-generate_rss = true
-feed_url = "https://martalmar.eu/articles"
+generate_feeds = false
+#feed_filenames = ["https://martalmar.eu/articles"]
 
 taxonomies = [
 		   {name = "tags", rss=true }
@@ -17,5 +15,6 @@ taxonomies = [
 [markdown]
 # When set to "true", all code blocks are highlighted.
 highlight_code = true
+smart_punctuation = true
 [extra]
 author = "Mahal"
