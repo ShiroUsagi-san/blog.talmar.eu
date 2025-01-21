@@ -4,35 +4,41 @@ html {
     color: $text-color;
 }
 img {
+    margin: 1em;
     border: 0.1em solid;
+    max-width: 100%;
+    height: auto;
+
+}
+summary {
+  display: flex;
+  font-size: 0.8em;
+  align-items: center;
+}
+summary::before {
+  content: '▶️';
+  display: inline-block;
+  margin-right: 0.5em;
+}
+details[open] > summary::before {
+  transform: rotate(90deg);
 }
 .profile {
 	border-radius: 100%;
 	border: 0.2em solid;
-	margin-right: 1em;
-}
-.left {
-	display: flex;
-	align-items: center;
-	justify-content:center;
-}
-.left > h1 {
-	vertical-align: baseline;
-	font-size: 1.4em;
-}
+} 
 blockquote {
     border-left: 5px solid rgb(8, 8, 8);
     background-color: #363636;
     padding: 1em 1.24em;
 }
 body {
-    margin: 0;
     background-color: $background-color;
-    margin-left: 5%;
-    margin-right: 5%;
+    background-image: url('circuit-board.svg');
     font-family: $base-font-family;
-    font-size: 110%;
-
+    fill: rgb(102, 156, 49);
+    margin: 0;
+    line-height: 1.8;
 }
 .article-summary {
     color: $meta-color;
@@ -44,6 +50,18 @@ body {
     font-family: $title-font-family;
     color: #618B25;
     margin: 0;
+    box-sizing: border-box;
+}
+.article-title {
+  display: flex;
+  align-items: center;
+  gap: 3em;
+}
+.metadata {
+  font-size: 1em;
+  background-color: $background-color;
+  padding: 10px;
+  border: 1px solid #2b2b2b;
 }
 .site-content a {
 	color: $link-color;
@@ -59,63 +77,161 @@ a {
 }
 p {
 	line-height:130%;
-	margin-bottom: .7em;
 	text-align: justify;
-	margin-top: 0;
+	margin: 0;
 }
 .article-meta {
     color: $meta-color !important;
 }
 .article-header div {
     display: flex;
+    gap: 2em;
+}
+.date {
+  background-color: $element-color;
+  margin-left: auto;
+  padding: 0.5em;
+  border-radius: 5px;
 }
 #centered {
     display: flex;    
     justify-content: center;
 
 }
-code {
-	background: #002b36;
-	padding: 0.2em;
+pre {
+  background: #002b36;
+  padding: 0.2em;
+  display: inline-block;
+  max-width: 100%;
+  > code {
+   display: block;
+   overflow-x: auto;
+  }
+}
+
+.article-item {
+  display: flex;
+  align-items: center;
+  padding: 1em;
+  background-color: $background-color;
+  border: 1px solid $border-color;
+  gap: 10px;
+  margin-bottom: 0.2em;
+  a {
+    color: $meta-color;
+    font-size: 1em;
+  }
+}
+
+.tags {
+  display: flex;
+  gap: 5px;
+  margin-left: auto;
+  flex-wrap: wrap;
+}
+.tag {
+  padding: 5px;
+  background-color: $element-color;
+  border-radius: 5px;
 }
 .site-header {
 	display: flex;
-    	justify-content: space-between;
-	border-bottom: 0.1em solid;
+    	justify-content: space-around;
+	border-bottom: 1px solid #2b2b2b;
+	padding: 10px 10px 10px 10px;
+	background-color: $background-color;
+        flex-wrap: wrap;
 }
 .article-header > p, .article-header > a{
     color: $meta-color;
 }
+
 strong {
     font-weight: 900;
     color: $hl-color;
 }
 footer {
     display: flex;
-    justify-content: right;
+    justify-content: center;
+    height: 15%;
+    padding: 1em;
     font-size: 0.8em;
-    color: #9c9c9c;
+    background-color: $background-color;
+    border: 1px solid $border-color;
 }
 .site-nav {
     margin-right: 2em;
     margin-top: auto;
     margin-bottom: auto;
 }
-
-.site-nav > a {
-	font-size: 1.4em; 
-	margin-left: 0.5em;
-	margin-right: 0.5em;
-	&:hover {
-		color: $hover-color;
-	}
+.topline {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  &>h1 {
+    margin:0;
+  }
 }
 
+.site-nav-element{
+    font-size: 1.1em; 
+    padding: 8px;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+    background-color: $element-color;
+    border-radius: 5px;
+    &:hover {
+	background-color: $hover-element-color;
+    }
+}
+.active {
+  background-color: $hover-element-color;
+}
+.articles {
+  list-style: none;
+  padding-left: 0;
+}
 main {
-	border-bottom: 0.1em solid;
+    display: flex;
+    width: 80%;
+    flex-direction: column;
+    margin-left: 10%;
+    margin-bottom: 2%;
+}
+.content {
+    margin-top: 2%;
+    margin-bottom: 2%;
 }
 .rule {
 	border-left: solid $hl-color;
 	padding: 1em;
+        margin: 0.3em;
 	background:#2e2d2d;
 }
+
+.toc {
+    display: flex;
+    justify-content: left;
+    width: 100%;
+    height: 100%;
+    padding: 1em;
+    font-size: 1.2em;
+    background-color: $background-color;
+    border: 1px solid #2b2b2b;
+}
+.toc-content {
+  font-size: 0.7em;
+}
+
+.zola-anchor {
+  margin-right: 0.5em;
+}
+
+.spoiler {
+  background-color: $background-color;
+  padding: 5px;
+}
+.spoiler-text {
+  font-size: 1.3em;
+}
+

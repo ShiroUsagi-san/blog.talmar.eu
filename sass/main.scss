@@ -24,12 +24,14 @@ $bold-font-family: 'Inter-Bold', serif;
 }
 
 
-$background-color:#1b1b1b ;
+$background-color:#1b1b1b;
+$element-color:#2b2b2b;
+$hover-element-color:#3d3d3d;
 $text-color: #D8D8D8;
 $hover-color: #4ec940;
 $meta-color: #4b4848;
 $link-color: #7cff6e;
 $hl-color: #a5ff1c;
-
+$border-color: #2b2b2b;
 @import "base";
 @import "effects";

@@ -1,4 +1,4 @@
-base_url = "https://martalmar.eu/"
+base_url = "https://martalmar.eu"
 title = "Mahal's blog"
 compile_sass = true
 default_language = "fr"
