@@ -1,22 +1,23 @@
 {% extends "base.html" %}
-{% block page_title %}
-<h1 class="site-title">{{ page.title }}.md</span> </h1>
-{% endblock %}
 
 {% block content %}
     <article class="article">
+	<hr>
         <div class="article-header">
-        <!-- {% if page.taxonomies.tags %}
-            [{% for tag in page.taxonomies.tags %}
-                <a href='{{ get_taxonomy_url(kind="tags", name=tag) | safe }}'>{{ tag }}</a>{% if loop.index == page.taxonomies.tags | length - 1 %},{%endif%}
-            {% endfor %}]
-        {% endif %}-->
-        {% if page.date %}
-            <p>{{ page.date | date(format="%d-%m-%Y") }}</p>
-        {% endif %}
-        </div>
-		<div class="toc">
-			{% if page.toc %}
+		<div class="article-title">
+			<h1 class="article-title">{{ page.title }}.md</span> </h1>
+			<div class="metadata">
+			{% if page.date %}
+			📅 {{ page.date | date(format="%Y-%m-%d") }} {{page.date | date(format="%a")}}
+			{% endif %}
+
+						</div>
+
+		</div>
+		<details class="toc">
+			<summary>Table of content <em class="date">{{page.word_count }} words  - {{ page.reading_time }} minutes</em></summary>
+			<div class="toc-content">
+				{% if page.toc %}
 				<ul>
 					{% for h1 in page.toc %}
 					<li><a href="{{h1.permalink | safe }}">{{ h1.title }}</a></li>
@@ -29,10 +30,14 @@
 					   {% endif %}
 					{% endfor %}
 				</ul>
-			{% endif %}
-		</div>
-			<div class="content">
-               {{ page.content | safe }}
+				{% endif %}
 			</div>
+		</details>
+
+        </div>
+	<hr/>
+	<div class="content">
+               {{ page.content | safe }}
+	</div>
     </article>
 {% endblock content %}

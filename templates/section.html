@@ -1,26 +1,21 @@
 {% extends "index.html" %}
 
-{% block page_title %}
-<h1 class="site-title"> articles</h1>
-{% endblock %}
 {% block content %}
+   <div class="content">
     <ul class="articles">
-        {% set articles = get_section(path="articles/_index.md") %}
-        {% for article in articles.pages %}
-            <li><span class="article-meta">{{ article.date | date(format="%d-%m-%Y") }}</span> - <a href='{{ article.permalink }}'>{{ article.title }}</a>
-            <!--{% if article.taxonomies %}
-                [{% for tag in article.taxonomies.tags %}
-                    <a class="article-meta"href='{{ get_taxonomy_url(kind="tags", name=tag) | safe }}'>{{ tag }}</a>{% if loop.index == article.taxonomies.tags | length - 1 %},{%endif%}
-                {% endfor %}]
-            {% endif %}-->
-            <div class="article-summary">
-                <p>{{ article.summary  | safe }} ...</p>
-                <span class="read-more"><a href="{{ article.permalink }}">lire la suite</a></span>
-            </div> 
-            </li>
+	<h1 class="site-title">Articles</h1>
+        {% set articles = section.pages %}
+        {% for article in articles %}
+	<li class="article-item">
+		<div>{{article.date}}</div>
+		<div><a href='{{ article.permalink }}'>{{ article.title }}</a></div>
+		<div class="tags">
+			{% for tag in  article.taxonomies.tags %}
+			<div class="tag">{{ tag }}</div>
+			{% endfor %}
+		</div>
+         </li>
         {% endfor %}
     </ul>
+   </div>
 {% endblock content %}
-</main>
-<hr>
-

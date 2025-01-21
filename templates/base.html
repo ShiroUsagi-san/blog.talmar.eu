@@ -21,33 +21,20 @@
 <body>
     <div class="site-container">
         <header class="site-header">
-		<a href="/">
-	    <div class="left">
-		    <img class="profile" src="/mahal.png" width="48" height="48"/>
-		    <h1> Mahal </h1>
-	    </div>
-		</a>
-            <nav class="site-nav">
-                <a href='{{ config.base_url }}/' class='{% if not page.path %} active {% endif %}'>Home </a>
-                <a href='{{ config.base_url }}/projects' class='{% if page %}{% if page.path == "/projects" %} active {% endif %}{% endif %}'>Activities</a>
-                <a href='{{ config.base_url}}/articles' class='{% if page %}{%if page.path == "/articles"%} active {% endif %}{% endif %}'>Articles</a> 
-            </nav>
+		<div class="topline">
+			<h1>Mahal</h1>
+			<img class="profile" src="/mahal.png" width="48" height="48"/>
+			<em>lost in the spectrum </em>
+		</div>
+		{% include "partials/nav.html" %}
         </header>
-        {% block page_title %}
-        {% endblock %}
-    <main class="site-content">
-	{% block content %}
-    {% endblock content %}
+        <main class="site-content">
+            {% block content %}
+            {% endblock content %}
+            <footer class="site-footer">
+      		<p>Site made with Zola and nothing else</p>
+            </footer>
         </main>
-      <footer class="site-footer" id="media">
-		  {% block footer %}
-		  <p>Site made with Zola</p>
-		  <!-- <div class="media-list">
-			<a href='{{ config.base_url }}/rss.xml'>rss</a> -
-			<a href='{{ config.base_url }}/tags'>tags</a>
-          </div> --
-		  {% endblock footer %} --!>
-        </footer>
     </div>
 </body>
 

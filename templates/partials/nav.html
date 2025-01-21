@@ -1,0 +1,5 @@
+<div class="site-nav">
+<a href='{{ config.base_url }}/' class='site-nav-element {% if current_path %} {% if current_path == "/"%} active{% endif %} {% endif %}'>Home</a>
+                <a href='{{ config.base_url }}/projects' class=' site-nav-element {% if current_path %} {% if current_path == "/projects/" %} active {% endif %} {% endif %}'>Activities</a>
+                <a href='{{ config.base_url}}/articles' class='site-nav-element  {% if current_path %} {% if current_path == "/articles/"%} active {% endif %} {% endif %}'>Articles</a> 
+</div>
