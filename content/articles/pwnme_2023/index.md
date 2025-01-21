@@ -1,5 +1,5 @@
 +++
-page_template = "article.html"
+template = "article.html"
 title = "Writeup pwnme 2023"
 date = 2023-05-09
 

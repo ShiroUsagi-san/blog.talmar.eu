@@ -57,8 +57,6 @@ On remarque une ligne qui ressemble au format du flag attendu: `FCSC{}`. Avec le
 
 {{ resize_image(path="Pasted image 20230429134716.png", width=600, height=600, op="fit")}}
 
-Flag: `FCSC{ed24c7fd86c2f0515366}`
-
 ##  T'es lent: 20 pts
 ### Enonce
 
@@ -98,7 +96,7 @@ Encore une fois, on regardant la source de la page, un nouveau commentaire et un
 
 Ce 2eme chemin cache nous enmene directement au flag!
 
-Flag: `FCSC{237dc3b2389f224f5f94ee2d6e44abbeff0cb88852562b97291d8e171c69b9e5}`
+{{ spoiler(summary="flag", spoiler="FCSC{237dc3b2389f224f5f94ee2d6e44abbeff0cb88852562b97291d8e171c69b9e5}") }}
 
 ## La gazette de Windows: 20 pts
 ### Enonce
@@ -158,7 +156,8 @@ for i in range(0, 72):
 print(''.join([chr(i) for i in flag])) #FCSC{98c98d98e5a546dcf6b1ea6e47602972ea1ce9ad7262464604753c4f79b3abd3}\r\n
 ```
 
-Flag: `FCSC{98c98d98e5a546dcf6b1ea6e47602972ea1ce9ad7262464604753c4f79b3abd3}`
+{{ spoiler(summary="flag", spoiler="FCSC{98c98d98e5a546dcf6b1ea6e47602972ea1ce9ad7262464604753c4f79b3abd3}") }}
+
 ## Tri selectif: 20 pts
 
 ### Enonce 
@@ -253,7 +252,8 @@ def partition(lo, hi):
 
 En executant ce code, on recoit le flag.
 
-Flag: `FCSC{e687c4749f175489512777c26c06f40801f66b8cf9da3d97bfaff4261f121459}`
+{{ spoiler(summary="flag", spoiler="FCSC{e687c4749f175489512777c26c06f40801f66b8cf9da3d97bfaff4261f121459}") }}
+
 
 ## Comparaison: 20 pts
 
@@ -285,8 +285,8 @@ Une fois ce code realise dans un fichier `comp`, je charge dans un script le fic
 comp = open("comp", 'r').read().split("\n")[:-1]  
 print(assembly(comp))
 ```
-Flag: `FCSC{6b7b0a69935108a38e58dfcb4efc857973efdc18b9db81ab9de047d3b9100b98}`
 
+{{ spoiler(summary="flag", spoiler="FCSC{6b7b0a69935108a38e58dfcb4efc857973efdc18b9db81ab9de047d3b9100b98}") }}
 ## SPAnosaurus: 20 pts
 
 Ce challenge est une introduction aux challenges side-channel
@@ -340,8 +340,8 @@ Le flag est au format FCSC{1234567890} avec 1234567890 à remplacer par l'exposa
 
 En observant les traces, en haut celle de l'utilisateur et en bas celle de l'admin, on remarque une partie conmmune jusqu'a 1500 puis les pics different entre 15000 et 2000. Si on considere les pics comme des 1 et les creux comme des 0, on retrouve visuellement `10100010100110010100110010100111` pour l'utilisateur. On fait de meme pour la consommation dans la trace admin, on obtient: `100101010111001110111101011`, en le representant en base 10, on trouve l'exposant secret de l admin.
 
-Flag: `FCSC{78355947}`
 
+{{ spoiler(summary="flag", spoiler="FCSC{78355947}") }}
 ## Aarg: 20 pts
 
 ### Enonce
@@ -420,8 +420,8 @@ data = bytes([
 print("".join([chr(d) for d in data if not d in [0xE2, 0x80, 0x8D]]))
 ```
 
-Flag: `FCSC{f9a38adace9dda3a9ae53e7aec180c5a73dbb7c364fe137fc6721d7997c54e8d}`
 
+{{ spoiler(summary="flag", spoiler="FCSC{f9a38adace9dda3a9ae53e7aec180c5a73dbb7c364fe137fc6721d7997c54e8d}") }}
 ## Uid: 20 pts
 ### Enonce
 
@@ -469,7 +469,7 @@ io.sendlineafter(b"username:", payload.encode())
 io.interactive()
 ```
 
-Flag: `FCSC{3ce9bedca72ad9c23b1714b5882ff5036958d525d668cadeb28742c0e2c56469}`
+{{ spoiler(summary="flag", spoiler="FCSC{3ce9bedca72ad9c23b1714b5882ff5036958d525d668cadeb28742c0e2c56469}") }}
 
 # Forensic
 
@@ -511,7 +511,7 @@ Pour ce premier challenge forensic, on a un dump memoire Windows a analyser. Je 
 
 ### Recuperation du nom d'utilisateur
 
-Afin de recuperer le nom d'utiisateur, on va utiliser `windows.hashdump` qui permet de recuperer tout les utilisateurs, leurs hashes ainsi que leur `rid`
+Afin de recuperer le nom d'utilisateur, on va utiliser `windows.hashdump` qui permet de recuperer tout les utilisateurs, leurs hashes ainsi que leur `rid`
 #### Commande utilisee
 `python vol.py -f dump.dmp windows.hashdump`
 
@@ -524,7 +524,7 @@ DefaultAccount  503     aad3b435b51404eeaad3b435b51404ee        31d6
 WDAGUtilityAccount      504     aad3b435b51404eeaad3b435b51404ee        8e6339a5717f7eab09999cc9f09f6828  
 Admin   1001    aad3b435b51404eeaad3b435b51404ee        a881324bad161293dedc71817988d944
 ```
-Le nom d'utilistateur est celui qui n'est pas genere par windows, ici `Admin`.
+Le nom d'utilistateur est celui qui n'est pas genere par windows, ici Admin.
 
 ### Recuperation du nom de la machine
 Pour recuperer le nom de la machine, on va inspecter le registre windows.
@@ -552,7 +552,7 @@ Pour recuperer le navigateur utilise, on affiche la liste des processus qui tour
 
 Dans la liste des processus, on tombe sur celui avec le pid 6808: brave. Et voila !
 
-Flag: `FCSC{Admin:DESKTOP-PI234PG:brave}`
+{{ spoiler(summary="flag", spoiler="FCSC{Admin:DESKTOP-PI234PG:brave}") }}
 
 # Hardware
 
@@ -614,7 +614,7 @@ STP
 On recupere le bytecode: `8002000180030000005680010001800400000646880000124c764ad7003200739000000900301400` 
 et le flag apparait!
 
-Flag: `FCSC{770ac04f9f113284eeee2da655eba34af09a12dba789c19020f5fd4eff1b1907}`
+{{ spoiler(summary="flag", spoiler="FCSC{770ac04f9f113284eeee2da655eba34af09a12dba789c19020f5fd4eff1b1907}") }}
 
 # Misc 
 ## Tri très selectif: 103 pts ⭐
@@ -630,7 +630,8 @@ nc challenges.france-cybersecurity-challenge.fr 2052
 
 En reprenant exactement le meme code que pour [Tri selectif](#tri-selectif-20-pts) et en changeant le port netcat, on obtient le flag directement. 2 flag pour le prix d'un !
 
-Flag: `FCSC{6d275607ccfba86daddaa2df6115af5f5623f1f8f2dbb62606e543fc3244e33a}`
+
+{{ spoiler(summary="flag", spoiler="FCSC{6d275607ccfba86daddaa2df6115af5f5623f1f8f2dbb62606e543fc3244e33a}") }}
 
 # Conclusion
 

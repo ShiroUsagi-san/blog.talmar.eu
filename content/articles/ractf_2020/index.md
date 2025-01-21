@@ -1,7 +1,8 @@
 +++
 page_template = "article.html"
-title = "retour_sur_le_ractf_2020"
+title = "retour sur le ractf 2020"
 date = 2020-06-15
+author = "mahal"
 [taxonomies]
 tags = ["ctf", "writeups"]
 +++

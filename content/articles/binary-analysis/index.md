@@ -1,9 +1,8 @@
 +++
-page_template = "article.html"
-title = "Explorons_les_format_executables"
+template = "article.html"
+title = "Explorons les formats executables"
 date = 2020-05-27
-
-draft= true
+draft = true
 [taxonomies]
 tags = ["binary", "analysis"]
 +++
